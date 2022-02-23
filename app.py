@@ -6,6 +6,10 @@
 import os, sys
 from flask import Flask, request
 from pymessenger import Bot
+from utils import wit_response
+from core import predict
+import pandas as pd
+from collections import OrderedDict
 
 app = Flask(__name__)
 
@@ -42,11 +46,54 @@ def webhook():
                     else:
                         messaging_text = 'no text'
                 
-                #Echo bot
-                response = messaging_text
+                # #Echo bot
+                # response = messaging_text
+                response = chatbot(messaging_text)
                 bot.send_text_message(sender_id, response)
                 
     return "ok", 200
+
+def chatbot(txt):
+    global allval, od, x
+    response = None
+    intent, entity, value = wit_response(txt)
+    print("Intent, Entity and Value from Wit----------"
+    print(intent, entity, value)
+    allval[x] = value
+    x = x + 1
+    tup = ()
+   
+    #if len(allval) < 24:
+    if intent == 'greetings':
+          response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
+          #global count
+          #print(count, allval[count])
+    elif entity == 'yes_no':
+          if value == 'yes':
+            print(0, "First in Question list")
+            response = od[0]
+          else:
+            response = "Okay maybe next time."
+           
+    elif entity == 'number' and len(allval) < 24:
+          #value > -1 and value < 100:
+          global count
+          print(count, " in Question list")
+          response = od[count]
+          count = count + 1
+          print(allval)
+    elif len(allval) == 24:
+          print("reached the end!")
+          allval.pop(0)
+          allval.pop(1)
+          for key, value in allval.items():
+            tup = tup + (value,)
+          outcome = predict(tup)
+          response = "The outcome is {}".format(str(outcome))
+       
+    return response
+    #else:
+
 
 def log(message):
     print(message)
