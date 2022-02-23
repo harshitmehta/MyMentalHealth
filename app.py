@@ -85,7 +85,7 @@ def chatbot(txt):
     global allval, od, x
     response = None
     intent, entity, value = wit_response(txt)
-    print("Intent, Entity and Value from Wit----------"
+    print("Intent, Entity and Value from Wit----------")
     print(intent, entity, value)
     allval[x] = value
     x = x + 1
