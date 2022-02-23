@@ -33,7 +33,7 @@ def wit_response(message_text):
     return (intent, entity, value)
 
 # resp = client.message(message_text)
-print(wit_response("give me sports news"))
+# print(wit_response("give me sports news"))
 
 def convo():
    print("this is inside convo")

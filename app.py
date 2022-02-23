@@ -7,7 +7,6 @@ import os, sys
 from flask import Flask, request
 from pymessenger import Bot
 from utils import wit_response
-from core import predict
 import pandas as pd
 from collections import OrderedDict
 
