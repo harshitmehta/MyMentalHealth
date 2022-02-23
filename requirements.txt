@@ -1,21 +1,14 @@
 brotlipy==0.7.0
 certifi==2020.6.20
-cffi @ file:///tmp/build/80754af9/cffi_1600699146221/work
 chardet==3.0.4
 click==7.1.2
-cryptography @ file:///tmp/build/80754af9/cryptography_1601046815590/work
 Flask==1.1.2
 gunicorn==20.0.4
-idna @ file:///tmp/build/80754af9/idna_1593446292537/work
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
-pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
 pymessenger==0.0.7.0
-pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1594392929924/work
 PySocks==1.7.1
-requests @ file:///tmp/build/80754af9/requests_1592841827918/work
 requests-toolbelt==0.9.1
 six==1.15.0
-urllib3 @ file:///tmp/build/80754af9/urllib3_1603305693037/work
 Werkzeug==1.0.1
