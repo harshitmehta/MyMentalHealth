@@ -84,7 +84,7 @@ def webhook():
                 
                 # response = chatbot(messaging_text)
                 # bot.send_text_message(sender_id, response)
-                
+                print("################## IN WEBHOOK ###################")
                 response = client.message(msg=messaging_text, context={'session_id':sender_id})
                 handle_message(response=response, fb_id=sender_id)
                 
@@ -139,6 +139,7 @@ def fb_message(sender_id, text):
     """
     Function for returning response to messenger
     """
+    print("################## IN FB_MESSAGE ###################")
     data = {
         'recipient': {'id': sender_id},
         'message': {'text': text}
@@ -165,7 +166,7 @@ def handle_message(response, fb_id):
     #     text = "We've received your message: " + response['_text']
     # # send message
     # fb_message(fb_id, text)
-    
+    print("################## IN HANDLE_MESSAGE ###################")
     intent, entity, value = wit_response(response)
     if intent == 'greetings':
         text = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
