@@ -50,8 +50,8 @@ allval = OrderedDict()
 x = 0
 
 
-# @app.route('/', methods=['GET'])
-@app.get('/')
+@app.route('/', methods=['GET'])
+# @app.get('/')
 def verify():
     # Webhook Verification
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
@@ -60,8 +60,8 @@ def verify():
         return request.args["hub.challenge"],200
     return "Hello World from mentalhealthbot",200
 
-# @app.route('/', methods=['POST'])
-@app.post('/')
+@app.route('/', methods=['POST'])
+# @app.post('/')
 def webhook():
     # data = request.get_json()
     
