@@ -122,7 +122,8 @@ def webhook():
                     print(messaging_text)
                     print("#"*30)
                     # print("(msg=" + messaging_text +","+ "context={'session_id':" + sender_id + "})")
-                    # response = client.message(msg=messaging_text, context={'session_id':sender_id})
+                    response = client.message(msg=messaging_text, context={'session_id':sender_id})
+                    print("Beyond response")
                     # handle_message(response=response, fb_id=sender_id)
                 
     else:
