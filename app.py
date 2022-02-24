@@ -153,6 +153,7 @@ def chatbot(txt):
     allval[x] = value
     # x = x + 1
     # tup = ()
+
     
     # if len(allval) < 24:
     if intent == 'greetings':
@@ -229,7 +230,7 @@ def handle_message(response, fb_id):
     
     
 def log(message):
-    print(message)
+    # print(message)
     sys.stdout.flush()    
 
 

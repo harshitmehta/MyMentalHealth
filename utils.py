@@ -18,11 +18,14 @@ def wit_response(message_text):
     value = None
     trait = None
     
+    yes_no = "yes_no"
+    greetings = "wit$greetings"
+    
     try:
-        intent = resp['intents'][0]['name']
-        entity = list(resp['entities'])[0]
+        intent, intent_val = resp['intents'][0]['name']
+        entity, entity_val = list(resp['entities'])[0]
         value = resp['entities'][entity][0]['body']
-        trait = resp['traits']
+        trait, trait_val = resp['traits']
         print("-------Wit Returns--------")
         print(intent)
         print(entity)
@@ -35,7 +38,8 @@ def wit_response(message_text):
             #print(value)
     except:
         pass
-    return (intent, entity, value, trait)
+    return (0, 0, 0, 0)
+    # return (intent, entity, value, trait)
 
 # resp = client.message(message_text)
 # print(wit_response("give me sports news"))
