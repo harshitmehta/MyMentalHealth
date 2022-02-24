@@ -113,6 +113,11 @@ def webhook():
                 # response = chatbot(messaging_text)
                 # bot.send_text_message(sender_id, response)
                 print("################## IN WEBHOOK ###################")
+                print("Sender ID :")
+                print(sender_id)
+                print("Response :")
+                print(response)
+                print("#"*30)
                 # print("(msg=" + messaging_text +","+ "context={'session_id':" + sender_id + "})")
                 # response = client.message(msg=messaging_text, context={'session_id':sender_id})
                 handle_message(response=response, fb_id=sender_id)
@@ -202,7 +207,7 @@ def handle_message(response, fb_id):
     # else:
     #     text = "We've received your message: " + response['_text']
     # send message
-    text = "We've received your message: " + response['_text']
+    text = "We've received your message: " + response['text']
     fb_message(fb_id, text)
             
     
