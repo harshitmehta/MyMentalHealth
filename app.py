@@ -63,7 +63,7 @@ def verify():
 @app.route('/', methods=['POST'])
 def webhook():
     data = request.get_json()
-    print("################## IN WEBHOOK ###################")
+    # print("################## IN WEBHOOK ###################")
     messaging_text = None
     
     # data = request.json
@@ -106,6 +106,16 @@ def webhook():
                     if messaging_event.get('message'):
                         if 'text' in messaging_event['message'] and 'is_echo' not in messaging_event['message']:
                             messaging_text = messaging_event['message']['text']
+                            print("JSON Request Data :")
+                            print(data)
+                            print("Sender ID :")
+                            print(sender_id)
+                            print("Message Text :")
+                            print(messaging_text)
+                            print("#"*30)
+                            print("----Going beyond Webhook----")
+                            response = chatbot(messaging_text)
+                            fb_message(sender_id, response)
                         else:
                             messaging_text = 'no text'
                 
@@ -114,18 +124,18 @@ def webhook():
                     # response = client.message(messaging_text)
                     # response = chatbot(messaging_text)
                     # bot.send_text_message(sender_id, response)
-                    print("JSON Request Data :")
-                    print(data)
-                    print("Sender ID :")
-                    print(sender_id)
-                    print("Message Text :")
-                    print(messaging_text)
-                    print("#"*30)
+                    # print("JSON Request Data :")
+                    # print(data)
+                    # print("Sender ID :")
+                    # print(sender_id)
+                    # print("Message Text :")
+                    # print(messaging_text)
+                    # print("#"*30)
                     # print("(msg=" + messaging_text +","+ "context={'session_id':" + sender_id + "})")
                     # response = client.message(msg=messaging_text, context={'session_id':sender_id})
-                    print("Beyond response")
-                    response = chatbot(messaging_text)
-                    fb_message(sender_id, response)
+                    # print("Beyond response")
+                    # response = chatbot(messaging_text)
+                    # fb_message(sender_id, response)
                     # bot.send_text_message(sender_id, response)
                     # handle_message(response=response, fb_id=sender_id)
                 
