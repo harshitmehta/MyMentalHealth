@@ -15,22 +15,40 @@ def wit_response(message_text):
     print("*"*20)
     intent = None
     entity = None
-    value = None
-    trait = None
+    entity_val = None
+    # trait = None
     
-    yes_no = "yes_no"
-    greetings = "wit$greetings"
+    # yes_no = "yes_no"
+    # greetings = "wit$greetings"
     
     try:
-        intent, intent_val = resp['intents'][0]['name']
-        entity, entity_val = list(resp['entities'])[0]
-        value = resp['entities'][entity][0]['body']
-        trait, trait_val = resp['traits']
+        if 'greetings:greetings' in resp['entities']:
+            entity = resp['entities']['greetings:greetings'][0]['name']
+            entity_val = resp['entities']['greetings:greetings'][0]['value']
+        elif 'yes_no:yes_no' in resp['entities']:
+            entity = resp['entities']['yes_no:yes_no'][0]['name']
+            entity_val = resp['entities']['yes_no:yes_no'][0]['value']
+        elif 'exit:exit' in resp['entities']:
+            entity = resp['entities']['exit:exit'][0]['name']
+            entity_val = resp['entities']['exit:exit'][0]['value']
+        else:
+            entity = "Not Entity detected"
+            entity_val = "No Entity value found"
+            
+        if 'name' in resp['intents'][0]:
+            intent = resp['intents'][0]['name']
+        else:
+            intent = "No Intent detected" 
+        
+        
+        # intent, intent_val = resp['intents'][0]['name']
+        # entity, entity_val = list(resp['entities'])[0]
+        # value = resp['entities'][entity][0]['body']
+        # trait, trait_val = resp['traits']
         print("-------Wit Returns--------")
         print(intent)
         print(entity)
-        print(value)
-        print(trait)
+        print(entity_val)
         # print(resp['entities']['timeofday:timeofday'][0]['body'])
         #entity = list(resp['entities'])
         #for i in entity:
@@ -38,7 +56,7 @@ def wit_response(message_text):
             #print(value)
     except:
         pass
-    return (0, 0, 0, 0)
+    return (intent, entity, entity_value)
     # return (intent, entity, value, trait)
 
 # resp = client.message(message_text)
