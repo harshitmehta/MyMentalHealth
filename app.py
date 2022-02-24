@@ -146,7 +146,7 @@ def webhook():
 
 def chatbot(txt):
     global allval, od, x
-    response = "Some response received from Wit"
+    # response = "Some response received from Wit"
     intent, entity, value = wit_response(txt)
     print("Intent, Entity, Value from Wit received in App----------")
     print(intent, entity, value)
@@ -155,20 +155,18 @@ def chatbot(txt):
     # tup = ()
 
     
-    # if len(allval) < 24:
     if intent == 'greetings':
         response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
-          #global count
-          #print(count, allval[count])
-    elif intent == 'yes_no':
-        if value == 'yes':
+
+    elif intent == 'confirmation':
+        if entity == 'yes_no' and value == 'yes':
             print(0, "First in Question list")
             response = od[0]
-        else:
+        elif entity == 'yes_no' and value == 'no':
             response = "Okay maybe next time."
-    elif intent == 'exit':
-        print("Exit with keyword")
-        response = "Exitting Bye!!"
+        elif entity == 'exit' and value == 'exit':
+            print("Exit with keyword")
+            response = "Exitting Bye!!"
            
     # elif entity == 'number' and len(allval) < 24:
     #       #value > -1 and value < 100:
