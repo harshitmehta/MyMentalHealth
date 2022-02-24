@@ -155,25 +155,25 @@ def chatbot(txt):
     print("Intent, Entity, Value from Wit received in App----------")
     print(intent, entity, value)
     allval[x] = value
-    # x = x + 1
-    # tup = ()
+    x = x + 1
+    tup = ()
  
     if intent == 'greetings':
         response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
 
     elif intent == 'confirmation':
         if entity == 'yes_no' and value == 'yes':
-            start_flag = 1
             #global my_ques_series
             print(0, "First in Question list")
-            response = od[0]
+            x = 0
+            response = od[x]
         elif entity == 'yes_no' and value == 'no':
-            start_flag = 0
             response = "Okay maybe next time."
         elif entity == 'exit' and value == 'exit':
-            start_flag = 0
             print("Exit with keyword")
             response = "See you later!!"
+        else:
+            pass
            
     
     elif entity == 'wit$number' and len(allval) < 24:
@@ -191,6 +191,8 @@ def chatbot(txt):
            tup = tup + (value,)
        outcome = model_predict(tup)
        response = "The outcome is {}".format(str(outcome))
+    else:
+        response = "Exit due to error"
       
     
     
@@ -230,7 +232,7 @@ def chatbot(txt):
     #         tup = tup + (value,)
           # outcome = predict(tup)
           # response = "The outcome is {}".format(str(outcome))
-       
+     
     return response
 
 
