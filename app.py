@@ -4,6 +4,7 @@
 """
 
 import os, sys
+import requests
 from flask import Flask, request
 from pymessenger import Bot
 from utils import wit_response
@@ -113,6 +114,8 @@ def webhook():
                 # response = chatbot(messaging_text)
                 # bot.send_text_message(sender_id, response)
                 print("################## IN WEBHOOK ###################")
+                print("JSON Request Data :")
+                print(data)
                 print("Sender ID :")
                 print(sender_id)
                 print("Response :")
