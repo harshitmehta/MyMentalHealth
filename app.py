@@ -67,7 +67,7 @@ def webhook():
     messaging_text = None
     
     # data = request.json
-    # log(data)
+    log(data)
     # if data['object'] == 'page':
     #     for entry in data['entry']:
     #         # get all the messages
@@ -156,15 +156,15 @@ def chatbot(txt):
     
     # if len(allval) < 24:
     if intent == 'greetings':
-          response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
+        response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
           #global count
           #print(count, allval[count])
     elif intent == 'wit$confirmation':
-          if value == 'yes':
+        if value == 'yes':
             print(0, "First in Question list")
-            # response = od[0]
-          else:
-            # response = "Okay maybe next time."
+            response = od[0]
+        else:
+            response = "Okay maybe next time."
            
     # elif entity == 'number' and len(allval) < 24:
     #       #value > -1 and value < 100:
