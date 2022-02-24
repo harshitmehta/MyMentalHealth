@@ -9,7 +9,7 @@ from flask import Flask, request
 from pymessenger import Bot
 from utils import wit_response
 import pandas as pd
-from core import predict
+from core import model_predict
 from collections import OrderedDict
 from wit import Wit
 app = Flask(__name__)
