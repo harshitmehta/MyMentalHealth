@@ -62,59 +62,60 @@ def verify():
 
 @app.route('/', methods=['POST'])
 def webhook():
-    # data = request.get_json()
+    data = request.get_json()
     print("################## IN WEBHOOK ###################")
     messaging_text = None
     
-    data = request.json
-    log(data)
-    if data['object'] == 'page':
+    # data = request.json
+    # log(data)
+    # if data['object'] == 'page':
+    #     for entry in data['entry']:
+    #         # get all the messages
+    #         messages = entry['messaging']
+    #         if messages[0]:
+    #             # Get the first message
+    #             message = messages[0]
+    #             print("Message**************")
+    #             print(message)
+    #             # Yay! We got a new message!
+    #             # We retrieve the Facebook user ID of the sender
+    #             fb_id = message['sender']['id']
+    #             # We retrieve the message content
+    #             text = message['message']['text']
+    #             print("Collected Info **************")
+    #             print("Sender ID: " + "\'" + fb_id + "\'")
+    #             print("Text: " + text)
+    #             fb_id = ("\'" + fb_id + "\'")
+    #             text = ("\'" + text + "\'")
+    #             # Let's forward the message to Wit /message
+    #             # and customize our response to the message in handle_message
+    #             response = client.message(msg=text, context={'session_id':fb_id})
+    #             handle_message(response=response, fb_id=fb_id)
+    
+    
+    
+    if data['object']=='page':
         for entry in data['entry']:
-            # get all the messages
-            messages = entry['messaging']
-            if messages[0]:
-                # Get the first message
-                message = messages[0]
-                print("Message**************")
-                print(message)
-                # Yay! We got a new message!
-                # We retrieve the Facebook user ID of the sender
-                fb_id = message['sender']['id']
-                # We retrieve the message content
-                text = message['message']['text']
-                print("Collected Info **************")
-                print("Sender ID: " + "\'" + fb_id + "\'")
-                print("Text: " + text)
-                fb_id = ("\'" + fb_id + "\'")
-                text = ("\'" + text + "\'")
-                # Let's forward the message to Wit /message
-                # and customize our response to the message in handle_message
-                response = client.message(msg=text, context={'session_id':fb_id})
-                handle_message(response=response, fb_id=fb_id)
-    
-    
-    
-#     if data['object']=='page':
-#         for entry in data['entry']:
-#             for messaging_event in entry['messaging']:
-#                 # Sender and Recipient IDs
-#                 sender_id = messaging_event['sender']['id']
-#                 recipient_id = messaging_event['recipient']['id']
-#                 #If message is a text or not
-#                 if messaging_event.get('message'):
-#                     if 'text' in messaging_event['message'] and 'is_echo' not in messaging_event['message']:
-#                         messaging_text = messaging_event['message']['text']
-#                     else:
-#                         messaging_text = 'no text'
+            for messaging_event in entry['messaging']:
+                # Sender and Recipient IDs
+                sender_id = messaging_event['sender']['id']
+                recipient_id = messaging_event['recipient']['id']
+                #If message is a text or not
+                if messaging_event.get('message'):
+                    if 'text' in messaging_event['message'] and 'is_echo' not in messaging_event['message']:
+                        messaging_text = messaging_event['message']['text']
+                    else:
+                        messaging_text = 'no text'
                 
-#                 # #Echo bot
-#                 # response = messaging_text
+                # #Echo bot
+                # response = messaging_text
                 
-#                 # response = chatbot(messaging_text)
-#                 # bot.send_text_message(sender_id, response)
-#                 print("################## IN WEBHOOK ###################")
-#                 response = client.message(msg=messaging_text, context={'session_id':sender_id})
-#                 handle_message(response=response, fb_id=sender_id)
+                # response = chatbot(messaging_text)
+                # bot.send_text_message(sender_id, response)
+                print("################## IN WEBHOOK ###################")
+                print("(msg=" + messaging_text +","+ "context={'session_id':" + sender_id + "})")
+                response = client.message(msg=messaging_text, context={'session_id':sender_id})
+                handle_message(response=response, fb_id=sender_id)
                 
     else:
         # Returned another event
