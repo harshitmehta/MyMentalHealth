@@ -98,13 +98,13 @@ def webhook():
         for entry in data['entry']:
             for messaging_event in entry['messaging']:
                 if 'message' in messaging_event:
-                    print("################## A new POST message received ###################")
                     # Sender and Recipient IDs
                     sender_id = messaging_event['sender']['id']
                     recipient_id = messaging_event['recipient']['id']
                     #If message is a text or not
                     if messaging_event.get('message'):
                         if 'text' in messaging_event['message'] and 'is_echo' not in messaging_event['message']:
+                            print("################## A new POST message received ###################")
                             messaging_text = messaging_event['message']['text']
                             print("JSON Request Data :")
                             print(data)
@@ -148,39 +148,40 @@ def webhook():
 def chatbot(txt):
     global allval, od, x
     response = "Some response received from Wit"
-    intent, entity, value, trait = wit_response(txt)
+    intent, entity, entity_value, trait = wit_response(txt)
     print("Intent, Entity, Value and Trait from Wit----------")
-    print(intent, entity, value, trait)
+    print(intent, entity, entity_value, trait)
     allval[x] = value
     x = x + 1
     tup = ()
+    
     # if len(allval) < 24:
-#     if intent == 'greetings':
-#           response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
-#           #global count
-#           #print(count, allval[count])
-#     elif entity == 'yes_no':
-#           if value == 'yes':
-#             print(0, "First in Question list")
-#             response = od[0]
-#           else:
-#             response = "Okay maybe next time."
+    if trait['wit$greetings']:
+          response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
+          #global count
+          #print(count, allval[count])
+    elif entity == 'yes_no':
+          if value == 'yes':
+            print(0, "First in Question list")
+            response = od[0]
+          else:
+            response = "Okay maybe next time."
            
-#     elif entity == 'number' and len(allval) < 24:
-#           #value > -1 and value < 100:
-#           global count
-#           print(count, " in Question list")
-#           response = od[count]
-#           count = count + 1
-#           print(allval)
-#     elif len(allval) == 24:
-#           print("reached the end!")
-#           allval.pop(0)
-#           allval.pop(1)
-#           for key, value in allval.items():
-#             tup = tup + (value,)
-#           # outcome = predict(tup)
-#           # response = "The outcome is {}".format(str(outcome))
+    elif entity == 'number' and len(allval) < 24:
+          #value > -1 and value < 100:
+          global count
+          print(count, " in Question list")
+          response = od[count]
+          count = count + 1
+          print(allval)
+    elif len(allval) == 24:
+          print("reached the end!")
+          allval.pop(0)
+          allval.pop(1)
+          for key, value in allval.items():
+            tup = tup + (value,)
+          # outcome = predict(tup)
+          # response = "The outcome is {}".format(str(outcome))
        
     return response
 
