@@ -97,7 +97,7 @@ def webhook():
     if data['object']=='page':
         for entry in data['entry']:
             for messaging_event in entry['messaging']:
-                if messaging_event['message']:
+                if 'message' in messaging_event:
                     print("################## A new POST message received ###################")
                     # Sender and Recipient IDs
                     sender_id = messaging_event['sender']['id']
