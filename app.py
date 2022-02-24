@@ -12,6 +12,12 @@ from collections import OrderedDict
 
 app = Flask(__name__)
 
+# Wit.ai parameters
+WIT_TOKEN = "ORT6OK2G7SPKVVMB35Z3N3WE6FGIB64K"
+
+# Setup Wit Client
+client = Wit(access_token=WIT_TOKEN)
+
 PAGE_ACCESS_TOKEN = "EAAHKjO47FbUBAFuUAr3jhifpZAVfKM0srqjHRhPKRAhtMhvahCfdBe2Aav68jQFLrQJM9GmzLmPCvhPk2M0kwPNWr4eqrwG5DhbZCcruF7vbGhJtkfMTZA7w5hN5fU6ypqmMFEKijNclYjfiWk6uY4G8iv5mk2FJIfKsEKkiJfNq13MNp7T1eZBlfgOfvZBvaJHZBFKYCUZBQZDZD"
 
 bot = Bot(PAGE_ACCESS_TOKEN)
@@ -75,10 +81,18 @@ def webhook():
                 
                 # #Echo bot
                 # response = messaging_text
-                response = chatbot(messaging_text)
-                bot.send_text_message(sender_id, response)
                 
-    return "ok", 200
+                # response = chatbot(messaging_text)
+                # bot.send_text_message(sender_id, response)
+                
+                response = client.message(msg=messaging_text, context={'session_id':sender_id})
+                handle_message(response=response, fb_id=sender_id)
+                
+    else:
+        # Returned another event
+        return 'Received Different Event'
+    return None
+    # return "ok", 200
 
 def chatbot(txt):
     global allval, od, x
@@ -121,7 +135,47 @@ def chatbot(txt):
     return response
     #else:
 
+def fb_message(sender_id, text):
+    """
+    Function for returning response to messenger
+    """
+    data = {
+        'recipient': {'id': sender_id},
+        'message': {'text': text}
+    }
+    # Setup the query string with your PAGE TOKEN
+    qs = 'access_token=' + PAGE_ACCESS_TOKEN
+    # Send POST request to messenger
+    resp = requests.post('https://graph.facebook.com/me/messages?' + qs,
+                         json=data)
+    return resp.content    
+    
+    
 
+def handle_message(response, fb_id):
+    """
+    Customizes our response to the message and sends it
+    """
+    # Checks if user's message is a greeting
+    # Otherwise we will just repeat what they sent us
+    # greetings = first_trait_value(response['traits'], 'wit$greetings')
+    # if greetings:
+    #     text = "hello!"
+    # else:
+    #     text = "We've received your message: " + response['_text']
+    # # send message
+    # fb_message(fb_id, text)
+    
+    intent, entity, value = wit_response(response)
+    if intent == 'greetings':
+        text = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
+    else:
+        text = "We've received your message: " + response['_text']
+    # send message
+    fb_message(fb_id, text)
+            
+    
+    
 def log(message):
     print(message)
     sys.stdout.flush()    

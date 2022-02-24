@@ -10,8 +10,8 @@ client = Wit(access_token = access_token)
 
 def wit_response(message_text):
     resp = client.message(message_text)
-    print(resp)
-    print("*"*20)
+    # print(resp)
+    # print("*"*20)
     intent = None
     entity = None
     value = None
@@ -20,9 +20,9 @@ def wit_response(message_text):
         intent = resp['intents'][0]['name']
         entity = list(resp['entities'])[0]
         value = resp['entities'][entity][0]['body']
-        print(intent)
-        print(entity)
-        print(value)
+        # print(intent)
+        # print(entity)
+        # print(value)
         # print(resp['entities']['timeofday:timeofday'][0]['body'])
         #entity = list(resp['entities'])
         #for i in entity:
