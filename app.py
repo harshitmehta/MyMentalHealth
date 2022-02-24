@@ -9,6 +9,7 @@ from flask import Flask, request
 from pymessenger import Bot
 from utils import wit_response
 import pandas as pd
+from core import predict
 from collections import OrderedDict
 from wit import Wit
 app = Flask(__name__)
@@ -25,7 +26,8 @@ bot = Bot(PAGE_ACCESS_TOKEN)
 
 count = 1
 od = OrderedDict()
-od[0] = 'What is your age?'
+
+od[0] = "Let's do this!\n  What is your age?"
 od[1] = 'What is your gender? 1 : Male 0 : Transgender -1 : Female'
 od[2] = 'Do you have a family history of mental illness? 1 : yes 0 : no'
 od[3] = 'If you have a mental health condition, do you feel that it interferes with your work? 0 : never 1 : rarely 2 : sometimes 3 : often'
@@ -47,6 +49,7 @@ od[18] = 'Would you bring up a physical health issue with a potential employer i
 od[19] = 'Do you feel that your employer takes mental health as seriously as physical health? 1 : yes 0 : don\'t know -1 : no'
 od[20] = 'Have you heard of or observed negative consequences for coworkers with mental health conditions in your workplace? 1 : yes 0 : no'
 od[21] = 'Thanks! Calculating...'
+
 allval = OrderedDict()
 x = 0
 
@@ -117,6 +120,7 @@ def webhook():
                             fb_message(sender_id, response)
                         else:
                             messaging_text = 'no text'
+                            fb_message(sender_id, messaging_text)
                 
                     # #Echo bot
                     # response = messaging_text
@@ -153,21 +157,64 @@ def chatbot(txt):
     allval[x] = value
     # x = x + 1
     # tup = ()
-
-    
+ 
     if intent == 'greetings':
         response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
 
     elif intent == 'confirmation':
         if entity == 'yes_no' and value == 'yes':
+            start_flag = 1
+            #global my_ques_series
             print(0, "First in Question list")
             response = od[0]
         elif entity == 'yes_no' and value == 'no':
+            start_flag = 0
             response = "Okay maybe next time."
         elif entity == 'exit' and value == 'exit':
+            start_flag = 0
             print("Exit with keyword")
-            response = "Exitting Bye!!"
+            response = "See you later!!"
            
+    
+    elif entity == 'wit$number' and len(allval) < 24:
+       #value > -1 and value < 100:
+       global count
+       print(count, " in Question list")
+       response = od[count]
+       count = count + 1
+       print(allval)
+    elif len(allval) == 24:
+       print("reached the end!")
+       allval.pop(0)
+       allval.pop(1)
+       for key, value in allval.items():
+           tup = tup + (value,)
+       outcome = model_predict(tup)
+       response = "The outcome is {}".format(str(outcome))
+      
+    
+    
+    # elif intent == 'info' and start_flag == 1:
+    #     if entity == 'wit$number' and value.isnumeric():
+    #         if value < 10 and value > 80:
+    #             response = "You are either too young or too old!!"
+            
+#             global count
+#             print(count, " in Question list")
+#             response = od[count]
+#             count = count + 1
+#             print(allval)
+    
+#     elif len(allval) == 24:
+#           print("reached the end!")
+#           allval.pop(0)
+#           allval.pop(1)
+#           for key, value in allval.items():
+#             tup = tup + (value,)
+#           outcome = predict(tup)
+#           response = "The outcome is {}".format(str(outcome))
+    
+    
     # elif entity == 'number' and len(allval) < 24:
     #       #value > -1 and value < 100:
     #       global count

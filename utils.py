@@ -31,6 +31,9 @@ def wit_response(message_text):
         elif 'exit:exit' in resp['entities']:
             entity = resp['entities']['exit:exit'][0]['name']
             entity_val = resp['entities']['exit:exit'][0]['value']
+        elif 'wit$number:number' in resp['entities']:
+            entity = resp['entities']['wit$number:number'][0]['name']
+            entity_val = resp['entities']['wit$number:number'][0]['value']
         else:
             entity = "Not Entity detected"
             entity_val = "No Entity value found"
