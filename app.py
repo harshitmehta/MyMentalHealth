@@ -9,7 +9,7 @@ from pymessenger import Bot
 from utils import wit_response
 import pandas as pd
 from collections import OrderedDict
-
+from wit import Wit
 app = Flask(__name__)
 
 # Wit.ai parameters
