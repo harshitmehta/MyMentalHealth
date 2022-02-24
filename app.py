@@ -17,7 +17,7 @@ WIT_TOKEN = "ORT6OK2G7SPKVVMB35Z3N3WE6FGIB64K"
 
 WIT_CLIENT_TOKEN = "5XI7DIJOVZ6R44YP7JBR4P3LCH6NLE7S"
 # Setup Wit Client
-client = Wit(access_token=WIT_CLIENT_TOKEN)
+client = Wit(access_token=WIT_TOKEN)
 
 PAGE_ACCESS_TOKEN = "EAAHKjO47FbUBAFuUAr3jhifpZAVfKM0srqjHRhPKRAhtMhvahCfdBe2Aav68jQFLrQJM9GmzLmPCvhPk2M0kwPNWr4eqrwG5DhbZCcruF7vbGhJtkfMTZA7w5hN5fU6ypqmMFEKijNclYjfiWk6uY4G8iv5mk2FJIfKsEKkiJfNq13MNp7T1eZBlfgOfvZBvaJHZBFKYCUZBQZDZD"
 
@@ -83,8 +83,10 @@ def webhook():
                 # We retrieve the message content
                 text = message['message']['text']
                 print("Collected Info **************")
-                print("Sender ID: " + fb_id)
+                print("Sender ID: " + "\'" + fb_id + "\'")
                 print("Text: " + text)
+                fb_id = ("\'" + fb_id + "\'")
+                text = ("\'" + text + "\'")
                 # Let's forward the message to Wit /message
                 # and customize our response to the message in handle_message
                 response = client.message(msg=text, context={'session_id':fb_id})
