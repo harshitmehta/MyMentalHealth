@@ -15,8 +15,9 @@ app = Flask(__name__)
 # Wit.ai parameters
 WIT_TOKEN = "ORT6OK2G7SPKVVMB35Z3N3WE6FGIB64K"
 
+WIT_CLIENT_TOKEN = "5XI7DIJOVZ6R44YP7JBR4P3LCH6NLE7S"
 # Setup Wit Client
-client = Wit(access_token=WIT_TOKEN)
+client = Wit(access_token=WIT_CLIENT_TOKEN)
 
 PAGE_ACCESS_TOKEN = "EAAHKjO47FbUBAFuUAr3jhifpZAVfKM0srqjHRhPKRAhtMhvahCfdBe2Aav68jQFLrQJM9GmzLmPCvhPk2M0kwPNWr4eqrwG5DhbZCcruF7vbGhJtkfMTZA7w5hN5fU6ypqmMFEKijNclYjfiWk6uY4G8iv5mk2FJIfKsEKkiJfNq13MNp7T1eZBlfgOfvZBvaJHZBFKYCUZBQZDZD"
 
@@ -51,7 +52,6 @@ x = 0
 
 
 @app.route('/', methods=['GET'])
-# @app.get('/')
 def verify():
     # Webhook Verification
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
@@ -61,10 +61,9 @@ def verify():
     return "Hello World from mentalhealthbot",200
 
 @app.route('/', methods=['POST'])
-# @app.post('/')
 def webhook():
     # data = request.get_json()
-    
+    print("################## IN WEBHOOK ###################")
     messaging_text = None
     
     data = request.json
@@ -73,6 +72,8 @@ def webhook():
         for entry in data['entry']:
             # get all the messages
             messages = entry['messaging']
+            print("Messages**************")
+            print(messages)
             if messages[0]:
                 # Get the first message
                 message = messages[0]
