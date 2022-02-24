@@ -56,7 +56,7 @@ def wit_response(message_text):
             #print(value)
     except:
         pass
-    return (intent, entity, entity_value)
+    return (intent, entity, entity_val)
     # return (intent, entity, value, trait)
 
 # resp = client.message(message_text)
