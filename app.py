@@ -110,7 +110,7 @@ def webhook():
                 
                 # #Echo bot
                 # response = messaging_text
-                response = client.message(messaging_text)
+                # response = client.message(messaging_text)
                 # response = chatbot(messaging_text)
                 # bot.send_text_message(sender_id, response)
                 print("################## IN WEBHOOK ###################")
@@ -118,12 +118,12 @@ def webhook():
                 print(data)
                 print("Sender ID :")
                 print(sender_id)
-                print("Response :")
-                print(response)
+                print("Message Text :")
+                print(messaging_text)
                 print("#"*30)
                 # print("(msg=" + messaging_text +","+ "context={'session_id':" + sender_id + "})")
                 # response = client.message(msg=messaging_text, context={'session_id':sender_id})
-                handle_message(response=response, fb_id=sender_id)
+                # handle_message(response=response, fb_id=sender_id)
                 
     else:
         # Returned another event
