@@ -98,32 +98,33 @@ def webhook():
     if data['object']=='page':
         for entry in data['entry']:
             for messaging_event in entry['messaging']:
-                # Sender and Recipient IDs
-                sender_id = messaging_event['sender']['id']
-                recipient_id = messaging_event['recipient']['id']
-                #If message is a text or not
-                if messaging_event.get('message'):
-                    if 'text' in messaging_event['message'] and 'is_echo' not in messaging_event['message']:
-                        messaging_text = messaging_event['message']['text']
-                    else:
-                        messaging_text = 'no text'
+                if messaging_event['message']['text']:
+                    # Sender and Recipient IDs
+                    sender_id = messaging_event['sender']['id']
+                    recipient_id = messaging_event['recipient']['id']
+                    #If message is a text or not
+                    if messaging_event.get('message'):
+                        if 'text' in messaging_event['message'] and 'is_echo' not in messaging_event['message']:
+                            messaging_text = messaging_event['message']['text']
+                        else:
+                            messaging_text = 'no text'
                 
-                # #Echo bot
-                # response = messaging_text
-                # response = client.message(messaging_text)
-                # response = chatbot(messaging_text)
-                # bot.send_text_message(sender_id, response)
-                print("################## IN WEBHOOK ###################")
-                print("JSON Request Data :")
-                print(data)
-                print("Sender ID :")
-                print(sender_id)
-                print("Message Text :")
-                print(messaging_text)
-                print("#"*30)
-                # print("(msg=" + messaging_text +","+ "context={'session_id':" + sender_id + "})")
-                # response = client.message(msg=messaging_text, context={'session_id':sender_id})
-                # handle_message(response=response, fb_id=sender_id)
+                    # #Echo bot
+                    # response = messaging_text
+                    # response = client.message(messaging_text)
+                    # response = chatbot(messaging_text)
+                    # bot.send_text_message(sender_id, response)
+                    print("################## IN WEBHOOK with new POST message ###################")
+                    print("JSON Request Data :")
+                    print(data)
+                    print("Sender ID :")
+                    print(sender_id)
+                    print("Message Text :")
+                    print(messaging_text)
+                    print("#"*30)
+                    # print("(msg=" + messaging_text +","+ "context={'session_id':" + sender_id + "})")
+                    # response = client.message(msg=messaging_text, context={'session_id':sender_id})
+                    # handle_message(response=response, fb_id=sender_id)
                 
     else:
         # Returned another event
