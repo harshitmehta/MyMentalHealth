@@ -72,16 +72,19 @@ def webhook():
         for entry in data['entry']:
             # get all the messages
             messages = entry['messaging']
-            print("Messages**************")
-            print(messages)
             if messages[0]:
                 # Get the first message
                 message = messages[0]
+                print("Message**************")
+                print(message)
                 # Yay! We got a new message!
                 # We retrieve the Facebook user ID of the sender
                 fb_id = message['sender']['id']
                 # We retrieve the message content
                 text = message['message']['text']
+                print("Collected Info **************")
+                print("Sender ID: " + fb_id)
+                print("Text: " + text)
                 # Let's forward the message to Wit /message
                 # and customize our response to the message in handle_message
                 response = client.message(msg=text, context={'session_id':fb_id})
