@@ -50,7 +50,8 @@ allval = OrderedDict()
 x = 0
 
 
-@app.route('/', methods=['GET'])
+# @app.route('/', methods=['GET'])
+@app.get('/')
 def verify():
     # Webhook Verification
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
@@ -59,34 +60,55 @@ def verify():
         return request.args["hub.challenge"],200
     return "Hello World from mentalhealthbot",200
 
-@app.route('/', methods=['POST'])
+# @app.route('/', methods=['POST'])
+@app.post('/')
 def webhook():
-    data = request.get_json()
-    log(data)
+    # data = request.get_json()
+    
     messaging_text = None
-    if data['object']=='page':
+    
+    data = request.json
+    log(data)
+    if data['object'] == 'page':
         for entry in data['entry']:
-            for messaging_event in entry['messaging']:
+            # get all the messages
+            messages = entry['messaging']
+            if messages[0]:
+                # Get the first message
+                message = messages[0]
+                # Yay! We got a new message!
+                # We retrieve the Facebook user ID of the sender
+                fb_id = message['sender']['id']
+                # We retrieve the message content
+                text = message['message']['text']
+                # Let's forward the message to Wit /message
+                # and customize our response to the message in handle_message
+                response = client.message(msg=text, context={'session_id':fb_id})
+                handle_message(response=response, fb_id=fb_id)
+    
+    
+    
+#     if data['object']=='page':
+#         for entry in data['entry']:
+#             for messaging_event in entry['messaging']:
+#                 # Sender and Recipient IDs
+#                 sender_id = messaging_event['sender']['id']
+#                 recipient_id = messaging_event['recipient']['id']
+#                 #If message is a text or not
+#                 if messaging_event.get('message'):
+#                     if 'text' in messaging_event['message'] and 'is_echo' not in messaging_event['message']:
+#                         messaging_text = messaging_event['message']['text']
+#                     else:
+#                         messaging_text = 'no text'
                 
-                # Sender and Recipient IDs
-                sender_id = messaging_event['sender']['id']
-                recipient_id = messaging_event['recipient']['id']
-
-                #If message is a text or not
-                if messaging_event.get('message'):
-                    if 'text' in messaging_event['message'] and 'is_echo' not in messaging_event['message']:
-                        messaging_text = messaging_event['message']['text']
-                    else:
-                        messaging_text = 'no text'
+#                 # #Echo bot
+#                 # response = messaging_text
                 
-                # #Echo bot
-                # response = messaging_text
-                
-                # response = chatbot(messaging_text)
-                # bot.send_text_message(sender_id, response)
-                print("################## IN WEBHOOK ###################")
-                response = client.message(msg=messaging_text, context={'session_id':sender_id})
-                handle_message(response=response, fb_id=sender_id)
+#                 # response = chatbot(messaging_text)
+#                 # bot.send_text_message(sender_id, response)
+#                 print("################## IN WEBHOOK ###################")
+#                 response = client.message(msg=messaging_text, context={'session_id':sender_id})
+#                 handle_message(response=response, fb_id=sender_id)
                 
     else:
         # Returned another event
