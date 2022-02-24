@@ -128,8 +128,8 @@ def webhook():
     else:
         # Returned another event
         return 'Received Different Event'
-    return None
-    # return "ok", 200
+    # return None
+    return "ok", 200
 
 def chatbot(txt):
     global allval, od, x
