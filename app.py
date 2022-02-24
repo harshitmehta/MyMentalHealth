@@ -156,34 +156,34 @@ def chatbot(txt):
     tup = ()
     
     # if len(allval) < 24:
-    if trait['wit$greetings']:
-          response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
-          #global count
-          #print(count, allval[count])
-    elif entity == 'yes_no':
-          if value == 'yes':
-            print(0, "First in Question list")
-            response = od[0]
-          else:
-            response = "Okay maybe next time."
+#     if trait['wit$greetings']:
+#           response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
+#           #global count
+#           #print(count, allval[count])
+#     elif entity == 'yes_no':
+#           if value == 'yes':
+#             print(0, "First in Question list")
+#             response = od[0]
+#           else:
+#             response = "Okay maybe next time."
            
-    elif entity == 'number' and len(allval) < 24:
-          #value > -1 and value < 100:
-          global count
-          print(count, " in Question list")
-          response = od[count]
-          count = count + 1
-          print(allval)
-    elif len(allval) == 24:
-          print("reached the end!")
-          allval.pop(0)
-          allval.pop(1)
-          for key, value in allval.items():
-            tup = tup + (value,)
-          # outcome = predict(tup)
-          # response = "The outcome is {}".format(str(outcome))
+#     elif entity == 'number' and len(allval) < 24:
+#           #value > -1 and value < 100:
+#           global count
+#           print(count, " in Question list")
+#           response = od[count]
+#           count = count + 1
+#           print(allval)
+#     elif len(allval) == 24:
+#           print("reached the end!")
+#           allval.pop(0)
+#           allval.pop(1)
+#           for key, value in allval.items():
+#             tup = tup + (value,)
+#           # outcome = predict(tup)
+#           # response = "The outcome is {}".format(str(outcome))
        
-    return response
+#     return response
 
 
 def fb_message(sender_id, text):
