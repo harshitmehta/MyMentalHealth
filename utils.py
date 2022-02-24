@@ -10,8 +10,9 @@ client = Wit(access_token = access_token)
 
 def wit_response(message_text):
     resp = client.message(message_text)
-    # print(resp)
-    # print("*"*20)
+    print("Inside Wit")
+    print(resp)
+    print("*"*20)
     intent = None
     entity = None
     value = None
