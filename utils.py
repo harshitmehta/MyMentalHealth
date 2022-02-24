@@ -22,9 +22,11 @@ def wit_response(message_text):
         entity = list(resp['entities'])[0]
         value = resp['entities'][entity][0]['body']
         trait = resp['traits']
-        # print(intent)
-        # print(entity)
-        # print(value)
+        print("-------Wit Returns--------")
+        print(intent)
+        print(entity)
+        print(value)
+        print(trait)
         # print(resp['entities']['timeofday:timeofday'][0]['body'])
         #entity = list(resp['entities'])
         #for i in entity:

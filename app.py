@@ -115,7 +115,7 @@ def webhook():
                             print("#"*30)
                             print("----Going beyond Webhook----")
                             response = chatbot(messaging_text)
-                            fb_message(sender_id, response)
+                            # fb_message(sender_id, response)
                         else:
                             messaging_text = 'no text'
                 
@@ -149,11 +149,11 @@ def chatbot(txt):
     global allval, od, x
     response = "Some response received from Wit"
     intent, entity, entity_value, trait = wit_response(txt)
-    print("Intent, Entity, Value and Trait from Wit----------")
+    print("Intent, Entity, Value and Trait from Wit received in App----------")
     print(intent, entity, entity_value, trait)
-    allval[x] = value
-    x = x + 1
-    tup = ()
+    # allval[x] = value
+    # x = x + 1
+    # tup = ()
     
     # if len(allval) < 24:
 #     if trait['wit$greetings']:
@@ -183,7 +183,7 @@ def chatbot(txt):
 #           # outcome = predict(tup)
 #           # response = "The outcome is {}".format(str(outcome))
        
-#     return response
+    return response
 
 
 def fb_message(sender_id, text):
