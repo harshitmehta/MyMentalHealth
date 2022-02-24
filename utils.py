@@ -15,11 +15,13 @@ def wit_response(message_text):
     intent = None
     entity = None
     value = None
+    trait = None
     
     try:
         intent = resp['intents'][0]['name']
         entity = list(resp['entities'])[0]
         value = resp['entities'][entity][0]['body']
+        trait = resp['traits']
         # print(intent)
         # print(entity)
         # print(value)
@@ -30,7 +32,7 @@ def wit_response(message_text):
             #print(value)
     except:
         pass
-    return (intent, entity, value)
+    return (intent, entity, value, trait)
 
 # resp = client.message(message_text)
 # print(wit_response("give me sports news"))

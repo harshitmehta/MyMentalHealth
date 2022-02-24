@@ -122,8 +122,11 @@ def webhook():
                     print(messaging_text)
                     print("#"*30)
                     # print("(msg=" + messaging_text +","+ "context={'session_id':" + sender_id + "})")
-                    response = client.message(msg=messaging_text, context={'session_id':sender_id})
+                    # response = client.message(msg=messaging_text, context={'session_id':sender_id})
                     print("Beyond response")
+                    response = chatbot(messaging_text)
+                    fb_message(sender_id, response)
+                    # bot.send_text_message(sender_id, response)
                     # handle_message(response=response, fb_id=sender_id)
                 
     else:
@@ -132,17 +135,16 @@ def webhook():
     # return None
     return "ok", 200
 
-# def chatbot(txt):
-#     global allval, od, x
-#     response = None
-#     intent, entity, value = wit_response(txt)
-#     print("Intent, Entity and Value from Wit----------")
-#     print(intent, entity, value)
-#     allval[x] = value
-#     x = x + 1
-#     tup = ()
-   
-#     #if len(allval) < 24:
+def chatbot(txt):
+    global allval, od, x
+    response = "Some response received from Wit"
+    intent, entity, value, trait = wit_response(txt)
+    print("Intent, Entity, Value and Trait from Wit----------")
+    print(intent, entity, value, trait)
+    allval[x] = value
+    x = x + 1
+    tup = ()
+    # if len(allval) < 24:
 #     if intent == 'greetings':
 #           response = "Hi, Welcome to My Mental Health app! We will do a small survey to predict how work related stress could be affecting your mental health. Shall we begin?"
 #           #global count
@@ -170,7 +172,7 @@ def webhook():
 #           # outcome = predict(tup)
 #           # response = "The outcome is {}".format(str(outcome))
        
-#     return response
+    return response
 
 
 def fb_message(sender_id, text):
