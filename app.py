@@ -99,6 +99,7 @@ def webhook():
         for entry in data['entry']:
             for messaging_event in entry['messaging']:
                 if messaging_event['message']:
+                    print("################## A new POST message received ###################")
                     # Sender and Recipient IDs
                     sender_id = messaging_event['sender']['id']
                     recipient_id = messaging_event['recipient']['id']
@@ -114,7 +115,6 @@ def webhook():
                     # response = client.message(messaging_text)
                     # response = chatbot(messaging_text)
                     # bot.send_text_message(sender_id, response)
-                    print("################## IN WEBHOOK with new POST message ###################")
                     print("JSON Request Data :")
                     print(data)
                     print("Sender ID :")
