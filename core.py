@@ -41,26 +41,26 @@ def model_train():
     df.Gender = df.Gender.replace('female (cis)', 'female')
     df.Gender = df.Gender.replace('femail', 'female')
 
-    df.Gender = df.Gender.replace('trans-female', 'trans')
-    df.Gender = df.Gender.replace('something kinda male?', 'trans')
-    df.Gender = df.Gender.replace('queer/she/they', 'trans')
-    df.Gender = df.Gender.replace('non-binary', 'trans')
-    df.Gender = df.Gender.replace('nah', 'trans')
-    df.Gender = df.Gender.replace('all', 'trans')
-    df.Gender = df.Gender.replace('enby', 'trans')
-    df.Gender = df.Gender.replace('fluid', 'trans')
-    df.Gender = df.Gender.replace('genderqueer', 'trans')
-    df.Gender = df.Gender.replace('androgyne', 'trans')
-    df.Gender = df.Gender.replace('agender', 'trans')
-    df.Gender = df.Gender.replace('male leaning androgynous', 'trans')
-    df.Gender = df.Gender.replace('guy (-ish) ^_^', 'trans')
-    df.Gender = df.Gender.replace('trans woman', 'trans')
-    df.Gender = df.Gender.replace('neuter', 'trans')
-    df.Gender = df.Gender.replace('female (trans)', 'trans')
-    df.Gender = df.Gender.replace('queer', 'trans')
-    df.Gender = df.Gender.replace('ostensibly male, unsure what that really means', 'trans')
-    df.Gender = df.Gender.replace('p', 'trans')
-    df.Gender = df.Gender.replace('a little about you', 'trans')
+    df.Gender = df.Gender.replace('trans-female', 'other')
+    df.Gender = df.Gender.replace('something kinda male?', 'other')
+    df.Gender = df.Gender.replace('queer/she/they', 'other')
+    df.Gender = df.Gender.replace('non-binary', 'other')
+    df.Gender = df.Gender.replace('nah', 'other')
+    df.Gender = df.Gender.replace('all', 'other')
+    df.Gender = df.Gender.replace('enby', 'other')
+    df.Gender = df.Gender.replace('fluid', 'other')
+    df.Gender = df.Gender.replace('genderqueer', 'other')
+    df.Gender = df.Gender.replace('androgyne', 'other')
+    df.Gender = df.Gender.replace('agender', 'other')
+    df.Gender = df.Gender.replace('male leaning androgynous', 'other')
+    df.Gender = df.Gender.replace('guy (-ish) ^_^', 'other')
+    df.Gender = df.Gender.replace('trans woman', 'other')
+    df.Gender = df.Gender.replace('neuter', 'other')
+    df.Gender = df.Gender.replace('female (trans)', 'other')
+    df.Gender = df.Gender.replace('queer', 'other')
+    df.Gender = df.Gender.replace('ostensibly male, unsure what that really means', 'other')
+    df.Gender = df.Gender.replace('p', 'other')
+    df.Gender = df.Gender.replace('a little about you', 'other')
 
     df['Age'] = pd.to_numeric(df['Age'],errors='coerce')
 
@@ -89,7 +89,7 @@ def model_train():
 
     df.no_employees = df.no_employees.map({'6-25': 25, '26-100': 100, '100-500':500, '500-1000': 1000, 'More than 1000': 2000, '1-5': 5})
 
-    mapping = {'Yes': 1, 'No': -1, "Don't know": 0,'Not sure': 0, 'Maybe': 0, 'Some of them': 0}
+    mapping = {'Yes': 1, 'No': 0, "Don't know": 2,'Not sure': 2, 'Maybe': 2, 'Some of them': 2}
     #three_factor = {'Yes': 1, 'No': -1, 'Not sure': 0}
     for col in df.select_dtypes(include=['object']):
         uniques = set(df[col].unique())
@@ -103,7 +103,7 @@ def model_train():
 
     df.leave = df.leave.map({'Very easy': 0, 'Somewhat easy': 1, "Don't know": 2, 'Somewhat difficult': 3, 'Very difficult': 4})
 
-    df.Gender = df.Gender.map({'male': 1, 'female': -1, 'trans': 0})
+    df.Gender = df.Gender.map({'male': 1, 'female': 2, 'other': 3})
 
     del df['Country']
 
@@ -112,7 +112,7 @@ def model_train():
     model = RandomForestClassifier(n_jobs=-1, n_estimators=10, class_weight='balanced')
 
     model.fit(x,y)
-    preds = model.predict(x)
+    # preds = model.predict(x)
     # print(preds)
     
     # save model weights
