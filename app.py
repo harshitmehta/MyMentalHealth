@@ -116,7 +116,7 @@ def webhook():
                             print(messaging_text)
                             print("#"*30)
                             print("----Going beyond Webhook----")
-                            response = chatbot(messaging_text)
+                            response = chatbot(sender_id, messaging_text)
                             fb_message(sender_id, response)
                         else:
                             messaging_text = 'no text'
@@ -148,14 +148,21 @@ def webhook():
     # return None
     return "ok", 200
 
-def chatbot(txt):
+def chatbot(sender_id,txt):
     global allval, od, x
+    file_name = sender_id + ".csv"
     # response = "Some response received from Wit"
     intent, entity, value = wit_response(txt)
     print("Intent, Entity, Value from Wit received in App----------")
     print(intent, entity, value)
-    allval[x] = value
-    x = x + 1
+    if path.exists(file_name):
+        rdf = pd.read_csv(file_name, sep=",")
+        counter = len(rdf.columns)
+        rdf[counter+1] = [value]
+    
+    # allval[x] = value
+    # Append to CSV here
+    # x = x + 1
     tup = ()
  
     if intent == 'greetings':
@@ -163,10 +170,16 @@ def chatbot(txt):
 
     elif intent == 'confirmation':
         if entity == 'yes_no' and value == 'yes':
+            if path.exists(file_name):
+                os.remove(filename)
+                print("Existing file deleted")
+            else:
+                df = pd.DataFrame({1: sender_id},index=[0])
+                df.to_csv(file_name, sep=",", index=False)
+                print("new data file created")
             #global my_ques_series
             print(0, "First in Question list")
-            x = 0
-            response = od[x]
+            response = od[0]
         elif entity == 'yes_no' and value == 'no':
             response = "Okay maybe next time."
         elif entity == 'exit' and value == 'exit':
@@ -176,21 +189,28 @@ def chatbot(txt):
             pass
            
     
-    elif entity == 'wit$number' and len(allval) < 24:
-       #value > -1 and value < 100:
-       global count
-       print(count, " in Question list")
-       response = od[count]
-       count = count + 1
-       print(allval)
-    elif len(allval) == 24:
-       print("reached the end!")
-       allval.pop(0)
-       allval.pop(1)
-       for key, value in allval.items():
-           tup = tup + (value,)
-       outcome = model_predict(tup)
-       response = "The outcome is {}".format(str(outcome))
+    elif entity == 'wit$number' and counter < 24:
+        # global count
+        print(counter, " in Question list")
+        response = od[counter]
+        # print(count, " in Question list")
+        # response = od[count]
+        # count = count + 1
+        # print(allval)
+    elif counter == 24:
+        print("reached the end!")
+        # allval.pop(0)
+        # allval.pop(1)
+        # for key, value in allval.items():
+        #     tup = tup + (value,)
+        if path.exists(file_name):
+            fdf = pd.read_csv(file_name, sep=",")
+            tup = list(fdf.itertuples(index=False, name=None))[0]
+            response = "Check the Tuple!!"
+            # outcome = model_predict(tup)
+            # response = "The outcome is {}".format(str(outcome))
+        else:
+            response = "Survery File Not Found!!"
     else:
         response = "Exit due to error"
       
