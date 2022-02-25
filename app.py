@@ -151,6 +151,7 @@ def webhook():
 
 def chatbot(sender_id,txt):
     global allval, od, x
+    counter=0
     file_name = sender_id + ".csv"
     # response = "Some response received from Wit"
     intent, entity, value = wit_response(txt)
@@ -194,7 +195,7 @@ def chatbot(sender_id,txt):
             pass
            
     
-    elif entity == 'wit$number' and counter < 24:
+    elif entity == 'wit$number' and counter < 22:
         # global count
         print(counter, "-------IN QUESTION LIST NOW-----------")
         response = od[counter]
@@ -202,7 +203,7 @@ def chatbot(sender_id,txt):
         # response = od[count]
         # count = count + 1
         # print(allval)
-    elif counter == 21:
+    elif counter == 22:
         print("----SURVEY ENDED-----")
         # allval.pop(0)
         # allval.pop(1)
@@ -211,6 +212,7 @@ def chatbot(sender_id,txt):
         if path.exists(file_name):
             fdf = pd.read_csv(file_name, sep=",")
             tup = list(fdf.itertuples(index=False, name=None))[0]
+            print("-----------Check the Tuple!!----------")
             print(tup)
             response = "Check the Tuple!!"
             # outcome = model_predict(tup)
