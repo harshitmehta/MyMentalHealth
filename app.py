@@ -182,7 +182,7 @@ def chatbot(sender_id,txt):
             df.to_csv(file_name, sep=",", index=False)
             print("----NEW SURVEY FILE CREATED----")
             #global my_ques_series
-            PRINT("---------BEGIN SURVEY---------")
+            print("---------BEGIN SURVEY---------")
             print(0, "-----------FIRST QUESTION IN SURVEY LIST-------")
             response = od[0]
         elif entity == 'yes_no' and value == 'no':
