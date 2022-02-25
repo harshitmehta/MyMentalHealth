@@ -28,28 +28,28 @@ bot = Bot(PAGE_ACCESS_TOKEN)
 count = 1
 od = OrderedDict()
 
-od[0] = "Let's do this!\n  What is your age?"
-od[1] = 'What is your gender?\n 1 : Male 0 : Transgender -1 : Female'
-od[2] = 'Do you have a family history of mental illness?\n 1 : yes 0 : no'
-od[3] = 'If you have a mental health condition, do you feel that it interferes with your work?\n 0 : never 1 : rarely 2 : sometimes 3 : often'
-od[4] = 'How many employees does your company or organization have?\n 1 : 1-5 2 : 6-25 3 : 26-100 4 : 100-500 5 : 500-1000 6: More than 1000'
-od[5] = 'Do you work remotely (outside of an office) at least 50% of the time?\n 1 : yes 0 : no'
-od[6] = 'Is your employer primarily a tech company/organization?\n 1 : yes 0 : no'
-od[7] = 'Does your employer provide mental health benefits?\n 1 : yes 0 : don\'t know -1 : no'
-od[8] = 'Do you know the options for mental health care your employer provides?\n 1 : yes 0 : not sure -1 : no'
-od[9] = 'Has your employer ever discussed mental health as part of an employee wellness program?\n 1 : yes 0 : don\'t know -1 : no'
-od[10] = 'Does your employer provide resources to learn more about mental health issues and how to seek help?\n 1 : yes 0 : don\'t know -1 : no'
-od[11] = 'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources?\n 1 : yes 0 : don\'t know -1 : no'
-od[12] = 'How easy is it for you to take medical leave for a mental health condition?\n 0 : very easy 1 : somewhat easy 2 : don\'t know 3 : somewhat difficult 4 : very difficult'
-od[13] = 'Do you think that discussing a mental health issue with your employer would have negative consequences?\n 1 : yes 0 : maybe -1 : no'
-od[14] = 'Do you think that discussing a physical health issue with your employer would have negative consequences?\n 1 : yes 0 : maybe -1 : no'
-od[15] = 'Would you be willing to discuss a mental health issue with your coworkers?\n 1 : yes 0 : some of them -1 : no'
-od[16] = 'Would you be willing to discuss a mental health issue with your direct supervisor(s)?\n 1 : yes 0 : some of them -1 : no'
-od[17] = 'Would you bring up a mental health issue with a potential employer in an interview?\n1 : yes 0 : maybe -1 : no'
-od[18] = 'Would you bring up a physical health issue with a potential employer in an interview?\n1 : yes 0 : maybe -1 : no'
-od[19] = 'Do you feel that your employer takes mental health as seriously as physical health?\n1 : yes 0 : don\'t know -1 : no'
-od[20] = 'Have you heard of or observed negative consequences for coworkers with mental health conditions in your workplace?\n1 : yes 0 : no'
-od[21] = 'Thanks! Calculating... Send 9 to see your result'
+od[0] = "Let's do this!\nWhat is your age?"
+od[1] = 'What is your gender?\n1 : Male\n0 : Other\n-1 : Female'
+od[2] = 'Do you have a family history of mental illness?\n1 : yes\n0 : no'
+od[3] = 'If you have a mental health condition, do you feel that it interferes with your work?\n0 : never\n1 : rarely\n2 : sometimes\n3 : often'
+od[4] = 'How many employees does your company or organization have?\n1 : 1-5 employees\n2 : 6-25\n3 : 26-100\n4 : 100-500\n5 : 500-1000\n6: More than 1000'
+od[5] = 'Do you work remotely (outside of an office) at least 50% of the time?\n1 : yes\n0 : no'
+od[6] = 'Is your employer primarily a tech company/organization?\n1 : yes\n0 : no'
+od[7] = 'Does your employer provide mental health benefits?\n1 : yes\n0 : don\'t know\n-1 : no'
+od[8] = 'Do you know the options for mental health care your employer provides?\n1 : yes\n0 : not sure\n-1 : no'
+od[9] = 'Has your employer ever discussed mental health as part of an employee wellness program?\n1 : yes\n0 : don\'t know\n-1 : no'
+od[10] = 'Does your employer provide resources to learn more about mental health issues and how to seek help?\n1 : yes\n0 : don\'t know\n-1 : no'
+od[11] = 'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources?\n1 : yes\n0 : don\'t know\n-1 : no'
+od[12] = 'How easy is it for you to take medical leave for a mental health condition?\n0 : very easy\n1 : somewhat easy\n2 : don\'t know\n3 : somewhat difficult\n4 : very difficult'
+od[13] = 'Do you think that discussing a mental health issue with your employer would have negative consequences?\n1 : yes \n0 : maybe \n-1 : no'
+od[14] = 'Do you think that discussing a physical health issue with your employer would have negative consequences?\n1 : yes \n0 : maybe \n-1 : no'
+od[15] = 'Would you be willing to discuss a mental health issue with your coworkers?\n1 : yes \n0 : some of them \n-1 : no'
+od[16] = 'Would you be willing to discuss a mental health issue with your direct supervisor(s)?\n1 : yes \n0 : some of them \n-1 : no'
+od[17] = 'Would you bring up a mental health issue with a potential employer in an interview?\n1 : yes \n0 : maybe \n-1 : no'
+od[18] = 'Would you bring up a physical health issue with a potential employer in an interview?\n1 : yes \n0 : maybe \n-1 : no'
+od[19] = 'Do you feel that your employer takes mental health as seriously as physical health?\n1 : yes \n0 : don\'t know \n-1 : no'
+od[20] = 'Have you heard of or observed negative consequences for coworkers with mental health conditions in your workplace?\n1 : yes \n0 : no'
+od[21] = 'Thanks! Calculating... \nSend \'9\' to see your result'
 
 allval = OrderedDict()
 x = 0
@@ -171,7 +171,10 @@ def chatbot(sender_id,txt):
             # print(T1)
             # response = "Check the Tuple!!"
             outcome = model_predict(fdf)
-            response = "The outcome is {}".format(str(outcome))
+            if outcome[0] == 1:
+                response = "Our analysis suggests your workplace could be affecting your mental health.\nKindly seek professional help or visit\nhttps://osmihelp.org/ for more information"
+            else:
+                response = "You have nothing to worry about!"
         else:
             response = "Survery File Not Found!!"
     else:
