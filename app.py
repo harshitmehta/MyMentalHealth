@@ -214,9 +214,12 @@ def chatbot(sender_id,txt):
             tup = list(fdf.itertuples(index=False, name=None))[0]
             print("-----------Check the Tuple!!----------")
             print(tup)
-            response = "Check the Tuple!!"
-            # outcome = model_predict(tup)
-            # response = "The outcome is {}".format(str(outcome))
+            L1 = list(tup)
+            L1.pop(0)
+            T1 = tuple(L1)
+            # response = "Check the Tuple!!"
+            outcome = model_predict(T1)
+            response = "The outcome is {}".format(str(outcome))
         else:
             response = "Survery File Not Found!!"
     else:
