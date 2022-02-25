@@ -155,7 +155,7 @@ def chatbot(sender_id,txt):
         if path.exists(file_name):
             fdf = pd.read_csv(file_name, sep=",")
             #Trial with df
-            fdf = fdf.iloc[: , 1:21]
+            fdf = fdf.iloc[: , 1:22]
             # tup = list(fdf.itertuples(index=False, name=None))[0]
             print("-----------Check the Tuple!!----------")
             # print(tup)
@@ -167,7 +167,7 @@ def chatbot(sender_id,txt):
             # tup = np.array([[44,1,0,1,6,0,1,0,-1,0,0,0,2,0,-1,-1,-1,-1,-1,0,0]])
             # print(tup.shape)
             # df = pd.DataFrame(tup)
-            # print(df)
+            print(fdf)
             # print(T1)
             # response = "Check the Tuple!!"
             outcome = model_predict(fdf)
