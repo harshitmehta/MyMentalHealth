@@ -83,16 +83,16 @@ def webhook():
                     #If message is a text or not
                     if messaging_event.get('message'):
                         if 'text' in messaging_event['message'] and 'is_echo' not in messaging_event['message']:
-                            print("################## A new POST message received ###################")
+                            # print("################## A new POST message received ###################")
                             messaging_text = messaging_event['message']['text']
-                            print("JSON Request Data :")
-                            print(data)
-                            print("Sender ID :")
-                            print(sender_id)
-                            print("Message Text :")
-                            print(messaging_text)
-                            print("#"*30)
-                            print("----Going beyond Webhook----")
+                            # print("JSON Request Data :")
+                            # print(data)
+                            # print("Sender ID :")
+                            # print(sender_id)
+                            # print("Message Text :")
+                            # print(messaging_text)
+                            # print("#"*30)
+                            # print("----Going beyond Webhook----")
                             response = chatbot(sender_id, messaging_text)
                             fb_message(sender_id, response)
                         else:
@@ -154,14 +154,23 @@ def chatbot(sender_id,txt):
         print("----SURVEY ENDED-----")
         if path.exists(file_name):
             fdf = pd.read_csv(file_name, sep=",")
-            tup = list(fdf.itertuples(index=False, name=None))[0]
+            #Trial with df
+            fdf = fdf.iloc[: , 1:21]
+            # tup = list(fdf.itertuples(index=False, name=None))[0]
             print("-----------Check the Tuple!!----------")
-            print(tup)
-            L1 = list(tup)
-            L1.pop(0)
-            T1 = tuple(L1)
+            # print(tup)
+            # L1 = list(tup)
+            # L1.pop(0)
+            # L1.pop(22)
+            # T1 = tuple(L1)
+            # ##Trial below
+            # tup = np.array([[44,1,0,1,6,0,1,0,-1,0,0,0,2,0,-1,-1,-1,-1,-1,0,0]])
+            # print(tup.shape)
+            # df = pd.DataFrame(tup)
+            # print(df)
+            # print(T1)
             # response = "Check the Tuple!!"
-            outcome = model_predict(T1)
+            outcome = model_predict(fdf)
             response = "The outcome is {}".format(str(outcome))
         else:
             response = "Survery File Not Found!!"
@@ -184,7 +193,7 @@ def fb_message(sender_id, text):
     # Send POST request to messenger
     resp = requests.post('https://graph.facebook.com/me/messages?' + qs,
                          json=data)
-    print("-----MESSAGE POSTED FROM BOT------")
+    # print("-----MESSAGE POSTED FROM BOT------")
     return resp.content    
             
     
