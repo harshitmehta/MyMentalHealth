@@ -29,27 +29,27 @@ count = 1
 od = OrderedDict()
 
 od[0] = "Let's do this!\n  What is your age?"
-od[1] = 'What is your gender? 1 : Male 0 : Transgender -1 : Female'
-od[2] = 'Do you have a family history of mental illness? 1 : yes 0 : no'
-od[3] = 'If you have a mental health condition, do you feel that it interferes with your work? 0 : never 1 : rarely 2 : sometimes 3 : often'
-od[4] = 'How many employees does your company or organization have? 1 : 1-5 2 : 6-25 3 : 26-100 4 : 100-500 5 : 500-1000 6: More than 1000'
-od[5] = 'Do you work remotely (outside of an office) at least 50% of the time? 1 : yes 0 : no'
-od[6] = 'Is your employer primarily a tech company/organization? 1 : yes 0 : no'
-od[7] = 'Does your employer provide mental health benefits? 1 : yes 0 : don\'t know -1 : no'
-od[8] = 'Do you know the options for mental health care your employer provides? 1 : yes 0 : not sure -1 : no'
-od[9] = 'Has your employer ever discussed mental health as part of an employee wellness program? 1 : yes 0 : don\'t know -1 : no'
-od[10] = 'Does your employer provide resources to learn more about mental health issues and how to seek help? 1 : yes 0 : don\'t know -1 : no'
-od[11] = 'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources? 1 : yes 0 : don\'t know -1 : no'
-od[12] = 'How easy is it for you to take medical leave for a mental health condition? 0 : very easy 1 : somewhat easy 2 : don\'t know 3 : somewhat difficult 4 : very difficult'
-od[13] = 'Do you think that discussing a mental health issue with your employer would have negative consequences? 1 : yes 0 : maybe -1 : no'
-od[14] = 'Do you think that discussing a physical health issue with your employer would have negative consequences? 1 : yes 0 : maybe -1 : no'
-od[15] = 'Would you be willing to discuss a mental health issue with your coworkers? 1 : yes 0 : some of them -1 : no'
-od[16] = 'Would you be willing to discuss a mental health issue with your direct supervisor(s)? 1 : yes 0 : some of them -1 : no'
-od[17] = 'Would you bring up a mental health issue with a potential employer in an interview?1 : yes 0 : maybe -1 : no'
-od[18] = 'Would you bring up a physical health issue with a potential employer in an interview? 1 : yes 0 : maybe -1 : no'
-od[19] = 'Do you feel that your employer takes mental health as seriously as physical health? 1 : yes 0 : don\'t know -1 : no'
-od[20] = 'Have you heard of or observed negative consequences for coworkers with mental health conditions in your workplace? 1 : yes 0 : no'
-od[21] = 'Thanks! Calculating...'
+od[1] = 'What is your gender?\n 1 : Male 0 : Transgender -1 : Female'
+od[2] = 'Do you have a family history of mental illness?\n 1 : yes 0 : no'
+od[3] = 'If you have a mental health condition, do you feel that it interferes with your work?\n 0 : never 1 : rarely 2 : sometimes 3 : often'
+od[4] = 'How many employees does your company or organization have?\n 1 : 1-5 2 : 6-25 3 : 26-100 4 : 100-500 5 : 500-1000 6: More than 1000'
+od[5] = 'Do you work remotely (outside of an office) at least 50% of the time?\n 1 : yes 0 : no'
+od[6] = 'Is your employer primarily a tech company/organization?\n 1 : yes 0 : no'
+od[7] = 'Does your employer provide mental health benefits?\n 1 : yes 0 : don\'t know -1 : no'
+od[8] = 'Do you know the options for mental health care your employer provides?\n 1 : yes 0 : not sure -1 : no'
+od[9] = 'Has your employer ever discussed mental health as part of an employee wellness program?\n 1 : yes 0 : don\'t know -1 : no'
+od[10] = 'Does your employer provide resources to learn more about mental health issues and how to seek help?\n 1 : yes 0 : don\'t know -1 : no'
+od[11] = 'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources?\n 1 : yes 0 : don\'t know -1 : no'
+od[12] = 'How easy is it for you to take medical leave for a mental health condition?\n 0 : very easy 1 : somewhat easy 2 : don\'t know 3 : somewhat difficult 4 : very difficult'
+od[13] = 'Do you think that discussing a mental health issue with your employer would have negative consequences?\n 1 : yes 0 : maybe -1 : no'
+od[14] = 'Do you think that discussing a physical health issue with your employer would have negative consequences?\n 1 : yes 0 : maybe -1 : no'
+od[15] = 'Would you be willing to discuss a mental health issue with your coworkers?\n 1 : yes 0 : some of them -1 : no'
+od[16] = 'Would you be willing to discuss a mental health issue with your direct supervisor(s)?\n 1 : yes 0 : some of them -1 : no'
+od[17] = 'Would you bring up a mental health issue with a potential employer in an interview?\n1 : yes 0 : maybe -1 : no'
+od[18] = 'Would you bring up a physical health issue with a potential employer in an interview?\n1 : yes 0 : maybe -1 : no'
+od[19] = 'Do you feel that your employer takes mental health as seriously as physical health?\n1 : yes 0 : don\'t know -1 : no'
+od[20] = 'Have you heard of or observed negative consequences for coworkers with mental health conditions in your workplace?\n1 : yes 0 : no'
+od[21] = 'Thanks! Calculating... Send 9 to see your result'
 
 allval = OrderedDict()
 x = 0
@@ -154,12 +154,15 @@ def chatbot(sender_id,txt):
     file_name = sender_id + ".csv"
     # response = "Some response received from Wit"
     intent, entity, value = wit_response(txt)
-    print("Intent, Entity, Value from Wit received in App----------")
+    print("INTENT, ENTITY, VALUE FROM WIT RECEIVED INTO APP----------")
     print(intent, entity, value)
     if path.exists(file_name):
+        print("----SURVEY FILE EXISTS----UPDATING SURVEY FILE-----")
         rdf = pd.read_csv(file_name, sep=",")
         counter = len(rdf.columns)
         rdf[counter+1] = [value]
+        rdf.to_csv(file_name, sep=",", index=False)
+        print("----SURVEY FILE UPDATED----SURVEY FILE UPDATED-----")
     
     # allval[x] = value
     # Append to CSV here
@@ -173,13 +176,14 @@ def chatbot(sender_id,txt):
         if entity == 'yes_no' and value == 'yes':
             if path.exists(file_name):
                 os.remove(filename)
-                print("Existing file deleted")
-            else:
-                df = pd.DataFrame({1: sender_id},index=[0])
-                df.to_csv(file_name, sep=",", index=False)
-                print("new data file created")
+                print("----EXISTING SURVEY FILE DELETED----")
+            
+            df = pd.DataFrame({1: sender_id},index=[0])
+            df.to_csv(file_name, sep=",", index=False)
+            print("----NEW SURVEY FILE CREATED----")
             #global my_ques_series
-            print(0, "First in Question list")
+            PRINT("---------BEGIN SURVEY---------")
+            print(0, "-----------FIRST QUESTION IN SURVEY LIST-------")
             response = od[0]
         elif entity == 'yes_no' and value == 'no':
             response = "Okay maybe next time."
@@ -192,14 +196,14 @@ def chatbot(sender_id,txt):
     
     elif entity == 'wit$number' and counter < 24:
         # global count
-        print(counter, " in Question list")
+        print(counter, "-------IN QUESTION LIST NOW-----------")
         response = od[counter]
         # print(count, " in Question list")
         # response = od[count]
         # count = count + 1
         # print(allval)
-    elif counter == 24:
-        print("reached the end!")
+    elif counter == 21:
+        print("----SURVEY ENDED-----")
         # allval.pop(0)
         # allval.pop(1)
         # for key, value in allval.items():
@@ -207,6 +211,7 @@ def chatbot(sender_id,txt):
         if path.exists(file_name):
             fdf = pd.read_csv(file_name, sep=",")
             tup = list(fdf.itertuples(index=False, name=None))[0]
+            print(tup)
             response = "Check the Tuple!!"
             # outcome = model_predict(tup)
             # response = "The outcome is {}".format(str(outcome))
@@ -261,7 +266,6 @@ def fb_message(sender_id, text):
     """
     Function for returning response to messenger
     """
-    print("################## IN FB_MESSAGE ###################")
     data = {
         'recipient': {'id': sender_id},
         'message': {'text': text}
@@ -271,6 +275,7 @@ def fb_message(sender_id, text):
     # Send POST request to messenger
     resp = requests.post('https://graph.facebook.com/me/messages?' + qs,
                          json=data)
+    print("-----MESSAGE POSTED FROM BOT------")
     return resp.content    
     
     
