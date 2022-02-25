@@ -175,7 +175,7 @@ def chatbot(sender_id,txt):
     elif intent == 'confirmation':
         if entity == 'yes_no' and value == 'yes':
             if path.exists(file_name):
-                os.remove(filename)
+                os.remove(file_name)
                 print("----EXISTING SURVEY FILE DELETED----")
             
             df = pd.DataFrame({1: sender_id},index=[0])
