@@ -12,6 +12,7 @@ import pandas as pd
 from core import model_predict
 from collections import OrderedDict
 from wit import Wit
+from os import path
 app = Flask(__name__)
 
 # Wit.ai parameters
