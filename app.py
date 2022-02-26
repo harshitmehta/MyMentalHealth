@@ -189,7 +189,8 @@ def chatbot(sender_id,txt):
             L1.pop(0)
             L1.pop(21)
             T1 = tuple(L1)
-            ff_df = pd.DataFrame(T1)
+            arr = np.array([[T1]])
+            ff_df = pd.DataFrame(arr)
             # ff_df = ff_df.iloc[: , 1:22]
             # ##Trial below
             # tup = np.array([[44,1,0,1,6,0,1,0,-1,0,0,0,2,0,-1,-1,-1,-1,-1,0,0]])
