@@ -181,22 +181,24 @@ def chatbot(sender_id,txt):
         if path.exists(file_name):
             fdf = pd.read_csv(file_name, sep=",")
             #Trial with df
-            fdf = fdf.iloc[: , 1:22]
-            # tup = list(fdf.itertuples(index=False, name=None))[0]
+            # fdf = fdf.iloc[: , 1:22]
+            tup = list(fdf.itertuples(index=False, name=None))[0]
             print("-----------Check the Tuple!!----------")
-            # print(tup)
-            # L1 = list(tup)
-            # L1.pop(0)
-            # L1.pop(22)
-            # T1 = tuple(L1)
+            print(tup)
+            L1 = list(tup)
+            L1.pop(0)
+            L1.pop(22)
+            T1 = tuple(L1)
+            ff_df = pd.DataFrame(T1)
+            ff_df = ff_df.iloc[: , 1:22]
             # ##Trial below
             # tup = np.array([[44,1,0,1,6,0,1,0,-1,0,0,0,2,0,-1,-1,-1,-1,-1,0,0]])
             # print(tup.shape)
             # df = pd.DataFrame(tup)
-            print(fdf)
+            print(ff_df)
             # print(T1)
             # response = "Check the Tuple!!"
-            outcome = model_predict(fdf)
+            outcome = model_predict(ff_df)
             if outcome[0] == 1:
                 response = "Our analysis suggests your workplace could be affecting your mental health.\nKindly seek professional help or visit\nhttps://osmihelp.org/ for more information"
             else:

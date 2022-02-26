@@ -134,8 +134,7 @@ def model_predict(user_data):
     print("Joblib successfully loaded")
     
     prediction = loaded_model.predict(user_data)
-    return prediction        
-        
+    return prediction
         
 
         
