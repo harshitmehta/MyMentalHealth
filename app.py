@@ -17,12 +17,11 @@ from os import path
 app = Flask(__name__)
 
 # Wit.ai parameters
-WIT_TOKEN = "ORT6OK2G7SPKVVMB35Z3N3WE6FGIB64K"
-# WIT_CLIENT_TOKEN = "5XI7DIJOVZ6R44YP7JBR4P3LCH6NLE7S"
+WIT_TOKEN = "WIT_TOKEN_HERE"
 # Setup Wit Client
 client = Wit(access_token=WIT_TOKEN)
 
-PAGE_ACCESS_TOKEN = "EAAHKjO47FbUBAFuUAr3jhifpZAVfKM0srqjHRhPKRAhtMhvahCfdBe2Aav68jQFLrQJM9GmzLmPCvhPk2M0kwPNWr4eqrwG5DhbZCcruF7vbGhJtkfMTZA7w5hN5fU6ypqmMFEKijNclYjfiWk6uY4G8iv5mk2FJIfKsEKkiJfNq13MNp7T1eZBlfgOfvZBvaJHZBFKYCUZBQZDZD"
+PAGE_ACCESS_TOKEN = "FACEBOOK_PAGE_ACCESS_TOKEN_HERE"
 
 bot = Bot(PAGE_ACCESS_TOKEN)
 
@@ -166,11 +165,6 @@ def chatbot(sender_id,txt):
             T1 = tuple(L1)
             arr = np.array([T1])
             ff_df = pd.DataFrame(arr)
-            # ff_df = ff_df.iloc[: , 1:22]
-            # ##Trial below
-            # tup = np.array([[44,1,0,1,6,0,1,0,-1,0,0,0,2,0,-1,-1,-1,-1,-1,0,0]])
-            # print(tup.shape)
-            # df = pd.DataFrame(tup)
             print(ff_df)
             # print(T1)
             # response = "Check the Tuple!!"
