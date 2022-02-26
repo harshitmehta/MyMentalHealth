@@ -1,6 +1,8 @@
 # MyMentalHealth
 Mental Health Bot for Facebook Messenger - A survey bot for Machine Learning predictions
 
+Data used for machine learning model -  Open Sourcing Mental Illness [https://osmihelp.org/]
+
 # Description: 
 A survey chatbot to collect user information using Facebook messenger and return predictions back to user.
 
