@@ -9,6 +9,7 @@ from flask import Flask, request
 from pymessenger import Bot
 from utils import wit_response
 import pandas as pd
+import numpy as np
 from core import model_predict
 from collections import OrderedDict
 from wit import Wit
@@ -189,7 +190,7 @@ def chatbot(sender_id,txt):
             L1.pop(0)
             L1.pop(21)
             T1 = tuple(L1)
-            arr = np.array([[T1]])
+            arr = np.array([T1])
             ff_df = pd.DataFrame(arr)
             # ff_df = ff_df.iloc[: , 1:22]
             # ##Trial below
