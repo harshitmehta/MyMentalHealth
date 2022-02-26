@@ -189,4 +189,4 @@ A survey chatbot to collect user information using Facebook messenger and return
 
 ## 12.	Predict based on user input
   a.	Use collected survey responses to predict based on pre-trained model\
-  b.	Send predicted responses back to user\
+  b.	Send predicted responses back to user
